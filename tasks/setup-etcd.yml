@@ -1,0 +1,20 @@
+---
+- name: "{{ etcd_prefix }} Update apt cache"
+  apt:
+    update_cache: yes
+  when: 
+
+- name: "{{ etcd_prefix }} Update yum cache"
+  yum:
+    update_cache: yes
+  when:
+
+- name: install etcd from repos
+  package:
+    name: "{{ etcd_version }}"
+    state: present
+
+- name: template etcd config
+  template:
+    src: etcd-node1.yml.j2
+    dest: /etc/default/etcd
